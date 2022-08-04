@@ -11,7 +11,19 @@ import java.util.Scanner;
  *
  * @author zshug
  */
+
+
+
 public class WindowMaster {
+    
+    public static float readValue (String prompt) {
+        Scanner sc = new Scanner(System.in);        
+        System.out.println(prompt);
+        String input = sc.nextLine();
+        float floatVal = Float.parseFloat(input);
+        return floatVal;
+}
+    
     public static void main(String[] args) {
         float height;
         float width;
