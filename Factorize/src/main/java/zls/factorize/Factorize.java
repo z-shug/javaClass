@@ -67,19 +67,26 @@ public class Factorize {
     }
     
     public static void isPrime(int number){
+        boolean isPrime ;
         if(number == 2){
-            System.out.println(number + " is a prime number");
+            isPrime =  true;
         }else if (number <2){
-            System.out.println(number + " is not a prime number");
+            isPrime = false;
         }
         for (int i=2; i < number;i++){
             if(number % i == 0) {
-                System.out.println(number + " is not a prime number");
-            } else {
-                System.out.println(number + " is a prime number");
-                }               
+                isPrime = false;
             }
-         }
+
+        }
+        isPrime = true;
+        
+        if(isPrime == true){
+            System.out.println(number + " is a prime number");
+        } else {
+             System.out.println(number + " is not a prime number");
+        }
+    }
         
   }
     
