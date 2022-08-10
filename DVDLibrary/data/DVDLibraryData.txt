@@ -1,1 +1,2 @@
-f:DVD{title=f, releaseDate=f, rating=f, directorName=f, studio=f, userRating=f}
+yes test:DVD{title=yes test, releaseDate=4, rating=2, directorName=3, studio=null, userRating=5}}}}}}}}}
+more test:DVD{title=more test, releaseDate=676, rating=f, directorName=f, studio=null, userRating=f}}}}}}}}}

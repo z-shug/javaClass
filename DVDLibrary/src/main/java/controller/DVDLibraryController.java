@@ -25,22 +25,144 @@ public class DVDLibraryController {
     }
     
     public void start(){
-        HashMap<String, DVD> dvdMap = new HashMap<String,DVD>();
-        dvdMap = dao.loadFromFile();
         view.startMessage();
-        int menuChoice; 
-        menuChoice = view.initialMenu();
-        if(menuChoice == 1){
-            ArrayList<String> newDVDInfo = new ArrayList<String>();
-            newDVDInfo = view.addDVDMenu(); 
-            DVD newDVD = dao.addDVD(newDVDInfo);
-            dvdMap.put(newDVD.getTitle(), newDVD);
-            dao.saveToFile(dvdMap);
-        } else if (menuChoice == 4){
-            view.listDVDMenu(dvdMap);
+       
+        while(true){
+            int menuChoice; 
+            menuChoice = view.initialMenu();
+            switch (menuChoice) {
+                case 1: 
+                    addDVD();
+                    break;
+                case 2 :
+                    deleteDVD();
+                    break;
+                case 3 : 
+                    listDVD();
+                    break;
+                case 4 : 
+                    searchDVD();
+                    break;
+                case 5 :
+                    System.exit(0);
+                    break;
+            }       
         }
-        
+    }
+         
+    
+    public void addDVD(){       
+        DVD newDVDInfo = view.addDVDMenu(); 
+        dao.addDVD(newDVDInfo);
+        returnToMenu();   
+    }
+    
+    public void deleteDVD(){
+        String movieDeletion = view.deleteDVDMenu();
+        dao.deleteDVD(movieDeletion);
+        returnToMenu();   
+    }
+    
+    public void listDVD(){
+        HashMap<String,DVD> hashMap = dao.loadFromFile();
+        view.listDVDMenu(hashMap);
+        returnToMenu();
     }
     
     
-}
+    
+    public void searchDVD(){
+        String searchDVD = view.searchDVD();
+        boolean contains = dao.search(searchDVD);
+        if (contains == true){
+            foundDVD(searchDVD);
+        } else {
+             notFoundDVD(searchDVD);
+        }
+        
+    }
+
+    public void foundDVD(String searchDVD){
+        int userInput = view.foundDVDMenu(searchDVD);
+            switch (userInput){
+                case 1:
+                    listInfo(searchDVD);
+                    break;
+                case 2:
+                    editInfo(searchDVD);
+                    break;
+                case 3:
+                    dao.deleteDVD(searchDVD);
+                    returnToMenu();
+                    break;
+                case 4:
+                    break;                 
+            }
+    }
+    
+    public void editInfo(String searchDVD){
+        int userChoice = view.editInfoMenu();
+        String userEntry = view.editInfoInput(searchDVD);                   
+        dao.editInfo(searchDVD, userChoice, userEntry);
+        editInfoReturnMenu(searchDVD);
+    }
+    
+    public void listInfo(String searchDVD){
+        DVD dvdObject = dao.listInfo(searchDVD);
+        view.listDVDInfo(dvdObject);
+        listInfoReturnToMenu(searchDVD);
+    }
+    
+    public void notFoundDVD(String searchDVD){
+        int userInput = view.notFoundDVDMenu(searchDVD);
+             switch (userInput){
+                 case 1:
+                     addDVD();
+                     break;
+                 case 2:
+                     break;
+             }
+    }
+    
+    public void returnToMenu(){
+        int userChoice = view.returnToMenu();
+        switch (userChoice){
+           case 1: 
+               break;
+           case 2:
+               System.exit(0);
+               break;
+       }
+    }
+    
+    public void listInfoReturnToMenu(String searchDVD){
+        int userChoice = view.listInfoReturnToMenu();
+        switch (userChoice){
+           case 1: 
+               break;
+           case 2:
+               editInfo(searchDVD);
+           case 3:
+               System.exit(0);
+               break;
+       }
+    }
+    public void editInfoReturnMenu( String searchDVD){
+        int secondUserChoice = view.editInfoReturnToMenu(searchDVD);
+        switch (secondUserChoice){
+            case 1:
+                
+                break;
+            case 2:
+                editInfo(searchDVD);
+                break;
+            case 3: 
+                System.exit(0);
+                break;
+        }
+    }
+         
+ }
+    
+    
+

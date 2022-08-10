@@ -22,39 +22,7 @@ public class DVD {
 
     
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final DVD other = (DVD) obj;
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (!Objects.equals(this.releaseDate, other.releaseDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.rating, other.rating)) {
-            return false;
-        }
-        if (!Objects.equals(this.directorName, other.directorName)) {
-            return false;
-        }
-        if (!Objects.equals(this.studio, other.studio)) {
-            return false;
-        }
-        if (!Objects.equals(this.userRating, other.userRating)) {
-            return false;
-        }
-        return true;
-    }
-    
+
 
     
     public String getTitle(){
@@ -121,6 +89,40 @@ public class DVD {
         hash = 43 * hash + Objects.hashCode(this.userRating);
         return hash;
     }
+    
+        @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DVD other = (DVD) obj;
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.releaseDate, other.releaseDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.rating, other.rating)) {
+            return false;
+        }
+        if (!Objects.equals(this.directorName, other.directorName)) {
+            return false;
+        }
+        if (!Objects.equals(this.studio, other.studio)) {
+            return false;
+        }
+        if (!Objects.equals(this.userRating, other.userRating)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
 }

@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -23,7 +24,9 @@ import java.util.Map;
 public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     
     final static String filePath = "C:\\Users\\zshug\\Documents\\git_hub\\Projects\\Java\\classWork\\DVDLibrary\\data\\DVDLibraryData.txt";
-        
+    //Create HashMap that you load into //collectionofDvds
+    HashMap<String, DVD> dvdMap = new HashMap<String,DVD>();
+    
     @Override
     public void saveToFile(HashMap<String,DVD> dvdMap){
        File file = new File(filePath); 
@@ -54,7 +57,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
     
     @Override
     public HashMap<String,DVD> loadFromFile(){
-        HashMap<String, DVD> map = new HashMap<String, DVD>();
+        //HashMap<String, DVD> map = new HashMap<String, DVD>();
         BufferedReader br = null;
         try {
   
@@ -80,7 +83,7 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
                 fileDVD.setStudio(dvdInfo[4].substring(7));
                 fileDVD.setUserRating(dvdInfo[5].substring(11));
                  
-                map.put(title, fileDVD);
+                dvdMap.put(title, fileDVD);
             }
         }
         catch (Exception e) {
@@ -98,42 +101,60 @@ public class DVDLibraryDaoFileImpl implements DVDLibraryDao {
             }
         }
   
-        return map;
+        return dvdMap;
         }
     
     
     @Override
-    public DVD addDVD(ArrayList<String> array){
-        DVD newDVDObject = new DVD();
-        ArrayList<String> inputDVD = array;
-        newDVDObject.setTitle(inputDVD.get(0));
-        newDVDObject.setReleaseDate(inputDVD.get(1)); 
-        newDVDObject.setRating(inputDVD.get(2));
-        newDVDObject.setDirectorName(inputDVD.get(3));
-        newDVDObject.setStudio(inputDVD.get(4));
-        newDVDObject.setUserRating(inputDVD.get(5));
-        return newDVDObject;
-        
+    public void addDVD(DVD dvd){       
+        loadFromFile();
+        dvdMap.put(dvd.getTitle(), dvd);
+        saveToFile(dvdMap);      
     }
     
     @Override
     public void deleteDVD(String title){
-        
+        loadFromFile();
+        dvdMap.remove(title);
+        saveToFile(dvdMap);
     }
     
     
     @Override
-    public void search(){
+    public boolean search(String title){
+        loadFromFile();
+        return dvdMap.containsKey(title);
         
     }
     @Override
-    public void listInfo(String title){
-        
+    public DVD listInfo(String title){
+        loadFromFile();
+        DVD dvdObject = dvdMap.get(title);
+        return dvdObject;
     }
     
     @Override
-    public void editInfo(String name){
-        
+    public void editInfo(String title, int number, String newValue){
+        loadFromFile();
+        DVD dvdObj = dvdMap.get(title);
+        switch (number){
+            case 1:
+                dvdObj.setReleaseDate(newValue);
+                break;
+            case 2: 
+                dvdObj.setRating(newValue);
+                break;
+            case 3: 
+                dvdObj.setDirectorName(newValue);
+                break;
+            case 4 :
+                dvdObj.setStudio(newValue);
+                break;
+            case 5 :
+                dvdObj.setUserRating(newValue);
+                break;                         
+        }  
+        saveToFile(dvdMap);
     }
     
 }

@@ -18,15 +18,15 @@ public interface DVDLibraryDao {
     
     public HashMap<String,DVD> loadFromFile();
     
-    public DVD addDVD(ArrayList<String> array);
+    public void addDVD(DVD dvd);
     
     public void deleteDVD(String title);
    
-    public void search();
+    public boolean search(String title);
     
-    public void listInfo(String title);
+    public DVD listInfo(String title);
     
-    public void editInfo(String name);
+    public void editInfo(String name, int number, String newValue);
     
     
     
