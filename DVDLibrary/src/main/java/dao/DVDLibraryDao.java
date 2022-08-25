@@ -8,27 +8,26 @@ package dao;
 import dto.DVD;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
  * @author zshug
  */
 public interface DVDLibraryDao {
-    public void saveToFile(HashMap<String,DVD> dvdMap);
     
-    public HashMap<String,DVD> loadFromFile();
+
+    public void addDVD(DVD dvd)throws DVDLibraryPersistenceException;
     
-    public void addDVD(DVD dvd);
-    
-    public void deleteDVD(String title);
+    public void deleteDVD(String title)throws DVDLibraryPersistenceException;
    
-    public boolean search(String title);
+    public boolean search(String title)throws DVDLibraryPersistenceException;
     
-    public DVD listInfo(String title);
+    public DVD listInfo(String title)throws DVDLibraryPersistenceException;
     
-    public void editInfo(String name, int number, String newValue);
+    public void editInfo(String name, int number, String newValue)throws DVDLibraryPersistenceException;
     
-    
+    public HashMap<String,DVD> getAllDVDS()throws DVDLibraryPersistenceException ;
     
     
 }

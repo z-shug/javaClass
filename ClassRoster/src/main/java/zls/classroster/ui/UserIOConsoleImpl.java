@@ -1,20 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ui;
+
+package zls.classroster.ui;
 
 /**
  *
  * @author zshug
  */
+
 import java.util.Scanner;
 
-public class UserIOConsoleImpl implements UserIO  {
-    
+public class UserIOConsoleImpl implements UserIO {
+
     final private Scanner console = new Scanner(System.in);
-    
+
+
     @Override
     public void print(String msg) {
         System.out.println(msg);
@@ -122,4 +120,5 @@ public class UserIOConsoleImpl implements UserIO  {
         } while (result < min || result > max);
         return result;
     }
+
 }

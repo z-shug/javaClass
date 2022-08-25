@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package zls.classroster.ui;
 
 /**
  *
  * @author zshug
  */
+
 public interface UserIO {
+    
     void print(String msg);
 
     double readDouble(String prompt);
@@ -29,5 +31,5 @@ public interface UserIO {
     long readLong(String prompt, long min, long max);
 
     String readString(String prompt);
-    
+
 }

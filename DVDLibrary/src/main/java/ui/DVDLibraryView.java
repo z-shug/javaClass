@@ -6,6 +6,8 @@
 package ui;
 
 import dto.DVD;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,8 +18,11 @@ import java.util.Set;
  * @author zshug
  */
 public class DVDLibraryView {
-    UserIO userIO = new UserIOConsoleImpl();  
-
+    private UserIO userIO;
+    
+    public DVDLibraryView(UserIO io ){
+        this.userIO = io;
+    }
     public void startMessage() {
         userIO.print("Welcome to the DVD Library!");
         
@@ -27,7 +32,7 @@ public class DVDLibraryView {
     
     public int initialMenu() {
         userIO.print("Initial Menu:");
-        int userChoice = userIO.readInt("\tPlease select the action you wish to perform: \n\t\t1.Add a DVD to the Collection \n\t\t2.Delete a DVD from the Collection \n\t\t3.List DVDs in Collection \n\t\t4.Search for DVD by Title\n\t\t5.Exit Program");
+        int userChoice = userIO.readInt("\tPlease select the action you wish to perform: \n\t\t1.Add a DVD to the Collection \n\t\t2.Delete a DVD from the Collection \n\t\t3.List DVDs in Collection \n\t\t4.Search for DVD by Title\n\t\t5.Exit Program", 1,5);
         return userChoice;
     }
     
@@ -37,10 +42,12 @@ public class DVDLibraryView {
         DVD dvd = new DVD();
         
         dvd.setTitle(userIO.readString("\tPlease Enter DVD Title: "));
-        dvd.setReleaseDate(userIO.readString("\tPlease Enter DVD Release Date: "));
+        String userDate = userIO.readString("\tPlease Enter DVD Release Date in formmat MM/dd/yyyy: ");
+        LocalDate parsedDate = LocalDate.parse(userDate, DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        dvd.setReleaseDate(parsedDate);
         dvd.setRating(userIO.readString("\tPlease Enter DVD MPAA Rating: "));
-        dvd.setDirectorName(userIO.readString("\tPlease Enter DVD Director's Name: "));
-        dvd.setReleaseDate(userIO.readString("\tPlease Enter DVD Release Date: "));  
+        dvd.setDirectorName(userIO.readString("\tPlease Enter DVD Director's Name: ")); 
+        dvd.setStudio(userIO.readString("\t Please Enter DVD Studio: "));
         dvd.setUserRating(userIO.readString("\tPlease Enter Personal Rating or Comment on DVD: "));
         userIO.print("Thank you for adding a DVD!");
         return dvd;
@@ -60,30 +67,30 @@ public class DVDLibraryView {
     
     public void listDVDInfo(DVD dvd){
         userIO.print("The information for " +dvd.getTitle() +" are:" );
-        userIO.print("\tRelease Date: " + dvd.getReleaseDate() +"\n\tRating: " + dvd.getRating()+"\n\tDirector Name: "+ dvd.getDirectorName() +"\n\t Studio: " + dvd.getStudio() + "\n\t User Rating or Notes: " + dvd.getUserRating());
+        userIO.print("\tRelease Date: " + dvd.getReleaseDate() +"\n\tRating: " + dvd.getRating()+"\n\tDirector Name: "+ dvd.getDirectorName() +"\n\tStudio: " + dvd.getStudio() + "\n\tUser Rating or Notes: " + dvd.getUserRating());
     }
     
     public int listInfoReturnToMenu(){
         userIO.print("What would you like to do?");
-        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Edit Info \n Press 3 to Exit");
+        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Edit Info \n Press 3 to Exit", 1,3);
         return userChoice;
     }
     
     public int returnToMenu(){
         userIO.print("What would you like to do?"); 
-        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Exit");
+        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Exit",1,2);
         return userChoice;
     }
     
     public int editInfoMenu(){
         userIO.print("Edit DVD Info Menu:");
-        int userInput = userIO.readInt("Slect what you would like to edit:\n\t1.Release Date\n\t2.MPAA Rating\n\t3.Director's Name\n\t4.Studio\n\t5.User Rating or Note");
+        int userInput = userIO.readInt("Slect what you would like to edit:\n\t1.Release Date\n\t2.MPAA Rating\n\t3.Director's Name\n\t4.Studio\n\t5.User Rating or Note",1,5);
         return userInput;        
     }
     
     public String editInfoInput(String name){
        userIO.print("You want to edit the " + name + ":");
-       String userInput = userIO.readString("Please enter the new value for"+ name+ ":"); 
+       String userInput = userIO.readString("Please enter the new value for "+ name+ ":"); 
        return userInput;
     }
     
@@ -92,19 +99,19 @@ public class DVDLibraryView {
     public int editInfoReturnToMenu(String dvd){
         userIO.print("The info for "+ dvd + " was succesfully updated!");
         userIO.print("What would you like to do?"); 
-        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Edit Something Else \nPress 3 to Exit");
+        int userChoice = userIO.readInt("Press 1 to go to Main Menu \nPress 2 to Edit Something Else \nPress 3 to Exit",1,3);
         return userChoice;
     }
     
     public int foundDVDMenu(String title) {
         userIO.print(title + " was found!");
-        int userInput = userIO.readInt("\tPlease select what you would like to do:\n\t\t1.Display Info\n\t\t2.Edit Info\n\t\t3.Delete DVD\n\t\t4.Return to Main Menu");
+        int userInput = userIO.readInt("\tPlease select what you would like to do:\n\t\t1.Display Info\n\t\t2.Edit Info\n\t\t3.Delete DVD\n\t\t4.Return to Main Menu",1,4);
         return userInput;
     }
     
     public int notFoundDVDMenu(String title){
         userIO.print(title + " was not found!");
-        int userInput = userIO.readInt("\tPlease select what you would like to do:\n\t\t1.Add DVD to Library\n\t\t2.Return to Main Menu");
+        int userInput = userIO.readInt("\tPlease select what you would like to do:\n\t\t1.Add DVD to Library\n\t\t2.Return to Main Menu" , 1, 2);
         return userInput;
     }
     
@@ -117,7 +124,14 @@ public class DVDLibraryView {
         
     }
     
+    public void displayUnknownCommandBanner() {
+        userIO.print("Unknown Command!!! Please Select From The Menu Choices");
+    }
     
+    public void displayErrorMessage(String errorMsg) {
+        userIO.print("=== ERROR ===");
+        userIO.print(errorMsg);
+    }
     
     
     

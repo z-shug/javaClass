@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package zls.vendingmachine.ui;
+
+import java.util.Scanner;
 
 /**
  *
  * @author zshug
  */
-import java.util.Scanner;
-
-public class UserIOConsoleImpl implements UserIO  {
-    
+public class UserIOConsoleImpl implements UserIO{
     final private Scanner console = new Scanner(System.in);
-    
+
+
     @Override
     public void print(String msg) {
         System.out.println(msg);
